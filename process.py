@@ -1,3 +1,4 @@
+import cv2
 from PIL import Image
 
 ASCII_CHARS = ['@', '#', '$', '%', '?', '*', '+', ';', ':', ',', '.']
@@ -30,3 +31,16 @@ def do(image, new_width=150):
 def process(image, width=100):
     res = do(image, width)
     return res
+
+def video(video, size = 40):
+    all_frames = []
+    cap = cv2.VideoCapture(video)
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if ret == True:
+            all_frames.append(process(Image.fromarray(frame), size))
+        else:
+            break
+    cap.release()
+
+    return all_frames
